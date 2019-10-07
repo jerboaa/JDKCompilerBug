@@ -53,8 +53,14 @@ public class Main
             System.err.format("Error on line %d in %s\n", diagnostic.getLineNumber(), diagnostic);
         }
 
+        boolean singleResult = getKind(processor.element);
         boolean result = tryToAttemptGetKind(processor.element);
-        System.out.println("END -- resulted: " + result);
+        System.out.println("Multiple: -- resulted: " + result);
+        System.out.println("Single: -- resulted: " + singleResult);
+	if (!singleResult) {
+           throw new RuntimeException("Test failed!");
+	}
+        System.out.println("Test passed!");
     }
 
     private static boolean tryToAttemptGetKind(Element element) {
@@ -70,5 +76,15 @@ public class Main
             }
         }
         return false;
+    }
+
+    private static boolean getKind(Element element) {
+            try {
+                ElementKind kind = element.getKind();
+                return true;
+            } catch (AssertionError error) {
+		error.printStackTrace();
+		return false;
+            }
     }
 }
