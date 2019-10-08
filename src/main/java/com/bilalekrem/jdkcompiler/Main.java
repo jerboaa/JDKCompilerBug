@@ -27,7 +27,9 @@ public class Main
 
         ArrayList<String> customClasses = new ArrayList<>();
         ArrayList<String> arguments = new ArrayList<>();
-        arguments.add("-proc:only");
+	if (args.length == 1 && Boolean.parseBoolean(args[0])) {
+          arguments.add("-proc:only");
+	}
         arguments.add("-classpath");
         arguments.add("src/main/java/com/bilalekrem/jdkcompiler");
 
